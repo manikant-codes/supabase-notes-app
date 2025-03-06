@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export async function addNote(formData: FormData) {
   console.log("formData", formData);
@@ -35,4 +36,17 @@ export async function getAllNotes() {
   return data;
 }
 
-export async function updateNote(formData: FormData) {}
+export async function updateNote(formData: FormData) {
+  console.log("formData", formData);
+}
+
+export async function deleteNote(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("notes").delete().eq("id", id);
+
+  if (error) {
+    console.log("error", error);
+  }
+
+  revalidatePath("/admin/notes");
+}

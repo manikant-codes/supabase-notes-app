@@ -1,9 +1,71 @@
 import React from "react";
 
+export type ButtonVariant = "solid" | "outlined" | "ghost";
+export type ButtonStatus = "success" | "danger" | "warning" | "default";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  status?: "success" | "danger" | "warning";
-  variant?: "solid" | "outlined" | "ghost";
+  status?: ButtonStatus;
+  variant?: ButtonVariant;
+}
+
+export function getExtraButtonClasses(status: string, variant: string) {
+  let extraClasses = "";
+
+  switch (variant) {
+    case "outlined": {
+      extraClasses += " bg-transparent border transition-all";
+      switch (status) {
+        case "success":
+          extraClasses += " border-green-800 hover:bg-green-900";
+          break;
+        case "warning":
+          extraClasses += " border-yellow-800 hover:bg-yellow-900";
+          break;
+        case "danger":
+          extraClasses += " border-red-800 hover:bg-red-900";
+          break;
+        default:
+          extraClasses += " border-blue-800 hover:bg-blue-900";
+      }
+      break;
+    }
+    case "ghost": {
+      extraClasses += " bg-transparent transition-all";
+      switch (status) {
+        case "success":
+          extraClasses += " hover:bg-green-900";
+          break;
+        case "warning":
+          extraClasses += " hover:bg-yellow-900";
+          break;
+        case "danger":
+          extraClasses += " hover:bg-red-900";
+          break;
+        default:
+          extraClasses += " hover:bg-blue-900";
+      }
+      break;
+    }
+    default: {
+      extraClasses += " transition-all";
+      switch (status) {
+        case "success":
+          extraClasses += " bg-green-800 hover:bg-green-900";
+          break;
+        case "warning":
+          extraClasses += " bg-yellow-800 hover:bg-yellow-900";
+          break;
+        case "danger":
+          extraClasses += " bg-red-800 hover:bg-red-900";
+          break;
+        default:
+          extraClasses += " bg-blue-800 hover:bg-blue-900";
+      }
+    }
+  }
+
+  return extraClasses;
 }
 
 export default function Button({
@@ -12,30 +74,14 @@ export default function Button({
   variant,
   ...props
 }: ButtonProps) {
-  let extraClasses = "";
-
-  if (status) {
-    if (status === "success") {
-      extraClasses += " bg-green-500 hover:bg-green-600";
-    } else if (status === "danger") {
-      extraClasses += " bg-red-500 hover:bg-red-600";
-    } else if (status === "warning") {
-      extraClasses += " bg-yellow-500 hover:bg-yellow-600";
-    }
-  }
-
-  if (variant) {
-    if (variant === "outlined") {
-      extraClasses += " border border-neutral-700";
-    } else if (variant === "ghost") {
-      extraClasses += " bg-transparent";
-    }
-  }
-
+  const extraClasses = getExtraButtonClasses(
+    status || "default",
+    variant || "solid"
+  );
   return (
     <button
       {...props}
-      className={`bg-blue-700 hover:bg-blue-800 cursor-pointer px-4 py-2 rounded ${extraClasses} ${
+      className={`cursor-pointer px-4 py-2 rounded ${extraClasses} ${
         props.className || ""
       }`}
     >
