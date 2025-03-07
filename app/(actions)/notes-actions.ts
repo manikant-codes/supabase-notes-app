@@ -22,6 +22,7 @@ export async function addNote(formData: FormData) {
         title: formData.get("title"),
         content: formData.get("content"),
         tags: formData.get("tags"),
+        description: formData.get("description"),
         author: user?.id,
       },
     ])
@@ -102,6 +103,7 @@ export async function updateNote(formData: FormData) {
     .update({
       title: formData.get("title"),
       content: formData.get("content"),
+      description: formData.get("description"),
       tags: formData.get("tags"),
     })
     .eq("id", formData.get("id"))

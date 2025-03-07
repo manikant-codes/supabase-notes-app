@@ -3,7 +3,8 @@
 import { addNote, getNote, updateNote } from "@/app/(actions)/notes-actions";
 import Button from "@/components/common/button";
 import Input from "@/components/common/input";
-import MDEditor from "@uiw/react-md-editor";
+import MarkdownInput from "@/components/common/markdown-input";
+import Textarea from "@/components/common/textarea";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ export default function AddUpdateNotesForm() {
 
   const [formState, setFormState] = useState({
     title: "",
+    description: "",
     content: "",
     tags: "",
   });
@@ -38,7 +40,9 @@ export default function AddUpdateNotesForm() {
     }
   }, [id]);
 
-  function handleFormChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleFormChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setFormState((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -78,7 +82,18 @@ export default function AddUpdateNotesForm() {
           value={formState.title}
           onChange={handleFormChange}
         />
-        <MDEditor value={formState.content} onChange={handleEditorChange} />
+        <Textarea
+          labelText="Description"
+          id="description"
+          name="description"
+          value={formState.description}
+          onChange={handleFormChange}
+        />
+        <MarkdownInput
+          labelText="Content"
+          value={formState.content}
+          onChange={handleEditorChange}
+        />
         <Input
           labelText="Tags"
           id="tags"

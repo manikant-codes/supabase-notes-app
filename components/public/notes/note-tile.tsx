@@ -7,13 +7,20 @@ interface NoteTileProps {
   title: string;
   content: string;
   views: number;
+  description: string;
 }
 
-export default function NoteTile({ id, title, content, views }: NoteTileProps) {
+export default function NoteTile({
+  id,
+  title,
+  content,
+  views,
+  description,
+}: NoteTileProps) {
   return (
     <Card className="p-4!">
       <h3 className="text-lg font-semibold">{title}</h3>
-      <ReactMarkdown>{content}</ReactMarkdown>
+      <p className="mt-2 line-clamp-3">{description}</p>
       <LinkButton
         href={`/notes/${id}`}
         text="Read More"
