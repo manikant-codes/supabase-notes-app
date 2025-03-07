@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteNote } from "@/app/admin/notes/[slug]/actions";
+import { deleteNote } from "@/app/(actions)/notes-actions";
 import Button from "@/components/common/button";
 import { Trash2 } from "lucide-react";
 

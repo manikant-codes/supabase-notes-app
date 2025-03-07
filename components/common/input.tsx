@@ -15,6 +15,7 @@ export default function Input({ labelText, ...props }: InputProps) {
         type={props.type || "text"}
         name={props.name}
         className="p-2 border-2 border-neutral-500 focus:border-blue-700 outline-none rounded"
+        {...props}
       />
     </div>
   );

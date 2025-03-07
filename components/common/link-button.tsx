@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { ButtonStatus, ButtonVariant, getExtraButtonClasses } from "./button";
 
-export interface LinkButtonProps {
+export interface LinkButtonProps extends React.ComponentPropsWithoutRef<"a"> {
   text?: string;
   href: string;
   icon?: ForwardRefExoticComponent<
@@ -19,6 +19,8 @@ export default function LinkButton({
   href,
   text,
   icon: Icon,
+  className,
+  ...props
 }: LinkButtonProps) {
   const extraClasses = getExtraButtonClasses(
     status || "default",
@@ -28,7 +30,10 @@ export default function LinkButton({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 px-4 py-2 rounded cursor-pointer ${extraClasses}`}
+      className={`flex items-center justify-center gap-2 px-4 py-2 rounded cursor-pointer ${extraClasses} ${
+        className || ""
+      }`}
+      {...props}
     >
       {Icon && (
         <span>

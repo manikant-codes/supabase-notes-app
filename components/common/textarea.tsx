@@ -16,6 +16,7 @@ export default function Textarea({ labelText, ...props }: TextAreaProps) {
         name={props.name}
         rows={props.rows || 3}
         className="p-2 border-2 border-neutral-500 focus:border-blue-700 outline-none rounded"
+        {...props}
       />
     </div>
   );
